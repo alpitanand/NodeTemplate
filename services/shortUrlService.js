@@ -9,7 +9,7 @@ module.exports = {
   shortUrl: async (req, res) => {
     try {
       let { url } = req.body;
-    
+
       if (!url || url === "") {
         return res.status(400).json({
           msg: "Some fields missing",
@@ -27,9 +27,8 @@ module.exports = {
         smallUrl: shortid.generate(),
       });
 
-
       const savedData = await saveUrl(newUrl);
-     
+
       res.status(200).json(savedData);
     } catch (error) {
       return res.status(500).json({
@@ -38,21 +37,19 @@ module.exports = {
     }
   },
 
-  redirectToNewUrl : async (req, res) =>{
-      try{
-            const tinyUrl = req.params.newUrl;
-           
-            const getBigUrl = await findByShortUrl(tinyUrl);
-            if(!getBigUrl){
-                return res.status(404).json({error: "Given URL not found...!!!!"})
-            }
-            return res.redirect(getBigUrl.bigUrl);
+  redirectToNewUrl: async (req, res) => {
+    try {
+      const tinyUrl = req.params.newUrl;
 
-      }catch(error){
-        return res.status(500).json({
-            error: "Some error occured",
-          });
+      const getBigUrl = await findByShortUrl(tinyUrl);
+      if (!getBigUrl) {
+        return res.status(404).json({ error: "Given URL not found...!!!!" });
       }
-  }
-
+      return res.redirect(getBigUrl.bigUrl);
+    } catch (error) {
+      return res.status(500).json({
+        error: "Some error occured",
+      });
+    }
+  },
 };
