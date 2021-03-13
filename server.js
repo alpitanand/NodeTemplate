@@ -24,7 +24,7 @@ mongoose.connection.on("error",function(error){
     console.log("Connection error "+error)
 })
 
-app.get("/api", routes);
+app.use("/api", routes);
 
 
 
