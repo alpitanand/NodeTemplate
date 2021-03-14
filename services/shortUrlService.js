@@ -16,6 +16,10 @@ module.exports = {
         });
       }
 
+      if (!url.startsWith("https://") || !url.startsWith("http://")) {
+        url = "https://" + url;
+      }
+
       const findUrlIfPresent = await findBigUrl(url);
 
       if (findUrlIfPresent != null) {
@@ -31,6 +35,7 @@ module.exports = {
 
       res.status(200).json(savedData);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         error: "Conuld not genrate URL",
       });
